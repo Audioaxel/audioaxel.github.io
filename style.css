@@ -21,3 +21,14 @@ body {
   .title {
     font-size: 3rem;
   }
+
+  .install-button {
+    width: 100%;
+    background-color: #4CAF50;
+    font-family: Cascadia Code, sans-serif;
+    color: white;
+    padding: 15px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
