@@ -87,8 +87,8 @@ footer {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
-  display: inline-block;
+  transform: translate(-50%, 1600px);
+  /* display: inline-block; */
   /* beide 50 war Standart */
   width: 31px;
   height: 31px;
@@ -100,8 +100,8 @@ footer {
   transition: .25s;
   background-image: url("assets/svg/triangle-15.svg");
   background-repeat: no-repeat;
-  background-position: center center;
-  background-size: cover;
+  /* background-position: center center; */
+  /* background-size: cover; */
 }
 
 .box {
@@ -124,9 +124,40 @@ footer {
 
 .audio-visualizer-canvas {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  /* top: 50%;
+  left: 50%; */
+  /* transform: translate(-50%, -50%); */
   /* filter: blur(0.5px) contrast(1); */
-  mix-blend-mode: screen;
+  /* mix-blend-mode: screen; */
+  /* background-color: #2a2a2a; */
+}
+
+/* ========================================== */
+
+.play {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 250px;
+    height: 250px;
+    background: #2a2a2a;
+    border-radius: 50%;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.btn-play {
+    border-left: 80px solid var(--main-purplish-dark);
+    border-bottom: 50px solid transparent;
+    border-top: 50px solid transparent;
+    cursor: pointer;
+}
+.btn-pause {
+    border-right: 20px solid var(--main-purplish-dark);
+    border-left: 20px solid var(--main-purplish-dark);
+    width: 75px;
+    height: 100px;
+    cursor: pointer;
 }

@@ -4,7 +4,34 @@ function testButtonClick() {
 }
 
 var button = document.getElementById('testButton');
-button.addEventListener('click', startAudioVisualizer);
+button.addEventListener('click', playAudio);
+
+function playAudio() {
+  if(audio === undefined) {
+	startAudioVisualizer();
+	isPlaying = true;
+	return;
+  }
+
+  if(audio.paused) {
+	audio.play();
+	isPlaying = true;
+  } else {
+	audio.pause();
+	clearInterval(intervalID);
+	isPlaying = false;
+  }
+}
+let isPlaying = false;
+
+const btn = document.querySelector('.btn1');
+btn.addEventListener('click', e => {
+	audio.paused ? audio.play() : audio.pause();
+	btn.classList.toggle('btn-play');
+	btn.classList.toggle('btn-pause');
+});
+
+let intervalID;
 // #endregion Test ▲
 
 // #region Canvas ▼
@@ -44,13 +71,12 @@ function startAudioVisualizer() {
 	visualizer = document.getElementById('audioVisualizer');
 	createVisualElements();
 
-	setInterval(() => {
+	intervalID = setInterval(() => {
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
 		analyser.getByteFrequencyData(dataArray);
 		drawVisualizer(bufferLength, 0, barWidth, barHeight, dataArray);
 		animatePlayerContainer(playerContainer);
 	}, animIntervall);
-
 }
 
 function setupAudioVisualizer() {
@@ -100,7 +126,7 @@ function drawVisualizer(bufferLength, x, barWidth, barHeight, dataArray) {
 		item = item > 150 ? item / 15 : item * 1.5;
 		elements[i].style.transform = `rotateZ(
 			${i * (360 / (bufferLength + elements_offset))}deg) translate(
-				-50%, ${clamp(item, 0, 12)}px)`; // 80, 108
+				-50%, ${clamp(item, 0, 16)}px)`; // 80, 108
 	}
 }
 
