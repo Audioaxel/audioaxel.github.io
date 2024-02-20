@@ -72,7 +72,7 @@ function startAudioVisualizer() {
 	createVisualElements();
 
 	intervalID = setInterval(() => {
-		ctx.clearRect(0, 0, canvas.width, canvas.height);
+		// ctx.clearRect(0, 0, canvas.width, canvas.height);
 		analyser.getByteFrequencyData(dataArray);
 		drawVisualizer(bufferLength, 0, barWidth, barHeight, dataArray);
 		animatePlayerContainer(playerContainer);
@@ -82,10 +82,10 @@ function startAudioVisualizer() {
 function setupAudioVisualizer() {
 
 	// Canvas Context
-	canvas = document.getElementById('audioVisualizerCanvas');
-	canvas.width = window.innerWidth;
-	canvas.height = window.innerHeight;
-	ctx = canvas.getContext('2d');
+	// canvas = document.getElementById('audioVisualizerCanvas');
+	// canvas.width = window.innerWidth;
+	// canvas.height = window.innerHeight;
+	// ctx = canvas.getContext('2d');
 
 	// Audio Context
 	audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -102,7 +102,7 @@ function setupAudioVisualizer() {
 	bufferLength = analyser.frequencyBinCount;
 	dataArray = new Uint8Array(bufferLength);
 
-	barWidth = canvas.width / bufferLength;
+	// barWidth = canvas.width / bufferLength;
 }
 
 function createVisualElements() {
