@@ -75,7 +75,7 @@ footer {
   position: fixed;
   bottom: 2vh;
   right: 2vw;
-  z-index: 100;
+  z-index: 1000;
   background-color: var(--main-purplish-dark);
   opacity: 0.6;
   border-radius: 50%;
@@ -90,8 +90,8 @@ footer {
   transform: translate(-50%, -50%);
   display: inline-block;
   /* beide 50 war Standart */
-  width: 50px;
-  height: 50px;
+  width: 31px;
+  height: 31px;
   border-radius: 10px;
   border-top: 15px solid transparent;
   border-right: 30px solid transparent;
@@ -108,14 +108,14 @@ footer {
   display: flex;
   justify-content: center;
   align-items: center;
-  filter: blur(13px) contrast(15);
+  filter: blur(2px) contrast(4);
   mix-blend-mode: screen;
 }
 .audio-visualizer {
   position: relative;
   /* Beide auf 300 als Standart */
-  width: 300px;
-  height: 300px;
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
   background: #fafafa71;
   transition: .5s;
@@ -127,6 +127,6 @@ footer {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  filter: blur(0.5px) contrast(1);
+  /* filter: blur(0.5px) contrast(1); */
   mix-blend-mode: screen;
 }
