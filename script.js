@@ -1,10 +1,9 @@
-// #region Test ▼
-function testButtonClick() {
-  alert('Der Button wurde geklickt!');
-}
 
-var button = document.getElementById('testButton');
-button.addEventListener('click', playAudio);
+/* === Test ============================== */
+
+// #region Play Button ▼
+var testPlayBtn = document.getElementById('testPlayButton');
+testPlayBtn.addEventListener('click', playAudio);
 
 function playAudio() {
   if(audio === undefined) {
@@ -24,24 +23,48 @@ function playAudio() {
 }
 let isPlaying = false;
 
-const btn = document.querySelector('.btn1');
+const btn = document.getElementById('playerContainer');
 btn.addEventListener('click', e => {
-	audio.paused ? audio.play() : audio.pause();
-	btn.classList.toggle('btn-play');
-	btn.classList.toggle('btn-pause');
+	if (audio === undefined) {
+		startAudioVisualizer();
+		return;
+	} else if (audio.paused) {
+		startAudioVisualizer();
+	} else {
+		audio.pause();
+		clearInterval(intervalID);
+	}
+	// audio.paused ? playAudio() : audio.pause();
+	// btn.classList.toggle('btn-play');
+	// btn.classList.toggle('btn-pause');
 });
 
 let intervalID;
-// #endregion Test ▲
+// #endregion Play Button ▲
 
-// #region Canvas ▼
-// Canvas
-let canvas;
-let ctx;
+// #region Something Button ▼
+var testPlayBtn = document.getElementById('testSomethingButton');
+testPlayBtn.addEventListener('click', testSomething);
 
-let barWidth;
-let barHeight;
+function testSomething() {
+  console.log('Test Something');
+	test();
+}
 
+// After DOM loaded
+document.addEventListener('DOMContentLoaded', function() {
+  onAfterMounted();
+});
+function onAfterMounted() {
+  console.log('DOM ist geladen.');
+  test();
+}
+
+
+
+// #endregion Something Button ▲
+
+// #region Audio Player Button ▼
 // Audio
 let audioCtx;
 let audio;
@@ -60,6 +83,18 @@ let elements_offset = - 10;
 
 
 /* ================================= */
+function test() {
+  playerContainer = document.getElementById('playerContainer');
+
+	setupAudioVisualizer();
+	visualizer = document.getElementById('audioVisualizer');
+	createVisualElementsINIT();
+  analyser.getByteFrequencyData(dataArray);
+
+  dataArray = new Uint8Array(32).fill(255);
+  console.log( bufferLength, dataArray);
+	drawVisualizer(bufferLength, dataArray);
+}
 
 function startAudioVisualizer() {
 	playerContainer = document.getElementById('playerContainer');
@@ -69,23 +104,21 @@ function startAudioVisualizer() {
 	audio.play();
 
 	visualizer = document.getElementById('audioVisualizer');
-	createVisualElements();
+	// createVisualElements();
 
 	intervalID = setInterval(() => {
-		// ctx.clearRect(0, 0, canvas.width, canvas.height);
+
 		analyser.getByteFrequencyData(dataArray);
-		drawVisualizer(bufferLength, 0, barWidth, barHeight, dataArray);
+
+    // der hier macht position verändern
+		drawVisualizer(bufferLength, dataArray);
+
 		animatePlayerContainer(playerContainer);
+    
 	}, animIntervall);
 }
 
 function setupAudioVisualizer() {
-
-	// Canvas Context
-	// canvas = document.getElementById('audioVisualizerCanvas');
-	// canvas.width = window.innerWidth;
-	// canvas.height = window.innerHeight;
-	// ctx = canvas.getContext('2d');
 
 	// Audio Context
 	audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -101,11 +134,18 @@ function setupAudioVisualizer() {
 	// Setup Animation
 	bufferLength = analyser.frequencyBinCount;
 	dataArray = new Uint8Array(bufferLength);
-
-	// barWidth = canvas.width / bufferLength;
 }
 
 function createVisualElements() {
+	for(let i = 0; i < bufferLength + elements_offset; i++) {
+		const element = document.createElement('span');
+		element.classList.add('element');
+		elements.push(element);
+		visualizer.appendChild(element);
+	}
+}
+
+function createVisualElementsINIT() {
 	for(let i = 0; i < bufferLength + elements_offset; i++) {
 		const element = document.createElement('span');
 		element.classList.add('element');
@@ -120,13 +160,13 @@ function createVisualElements() {
 	15 lässt die elemente weiter nach innen fallen
 	1.5 ??
 */
-function drawVisualizer(bufferLength, x, barWidth, barHeight, dataArray) {
+function drawVisualizer(bufferLength, dataArray) {
 	for (let i = 0; i < bufferLength + elements_offset; i++) {
 		let item = dataArray[i];
 		item = item > 150 ? item / 15 : item * 1.5;
 		elements[i].style.transform = `rotateZ(
 			${i * (360 / (bufferLength + elements_offset))}deg) translate(
-				-50%, ${clamp(item, 0, 16)}px)`; // 80, 108
+				-50%, ${clamp(item, 13, 16)}px)`; // 80, 108
 	}
 }
 
@@ -136,8 +176,9 @@ const clamp = (num, min, max) => {
 	if(num <= min) return min;
 	return num;
 }
+// #endregion Audio Player Button ▲
 
-// Hier nochmal ran
+// #region Audio Volume ▼
 function animatePlayerContainer(player)
 {
     let volume = currentVolume();
@@ -148,7 +189,6 @@ function animatePlayerContainer(player)
     // -> takes 2args: hoizonal & vertical scale
     (1 + softVolume * 5), (1 + softVolume * 4) + ')';   
 }
-
 
 function currentVolume() 
 {
@@ -165,4 +205,4 @@ function currentVolume()
     let volume = Math.sqrt(sum / normSamples.length);
     return volume;
 }
-// #endregion Canvas ▲
+// #endregion Audio Volume ▲
