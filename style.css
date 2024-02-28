@@ -1,0 +1,33 @@
+body {
+  font-family: Cascadia Code, sans-serif;
+  margin: 0; /* Hinzugefügt, um den Standardabstand zu entfernen */
+  padding: 0; /* Hinzugefügt, um den Standardabstand zu entfernen */
+}
+
+/* Make content area fill the entire browser window */
+html,
+.fullscreen {
+  display: flex;
+  height: 100%;
+  width: 100%;
+}
+
+/* Center the content in the browser window */
+.container {
+  margin: auto;
+  text-align: center;
+}
+
+.title {
+  font-size: 3rem;
+}
+
+.install-button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 15px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px; /* Hinzugefügt, um Abstand zwischen dem Titel und dem Button zu schaffen */
+}
